@@ -328,7 +328,8 @@ class DictateApp(rumps.App):
     def _rebuild_vocab_menu(self):
         terms = self.vocab.get("terms", [])
         self._menu_vocab.title = f"Vocabulary ({len(terms)})"
-        self._menu_vocab.clear()
+        if self._menu_vocab._menu is not None:
+            self._menu_vocab.clear()
         if terms:
             for term in terms:
                 self._menu_vocab.add(
@@ -347,7 +348,8 @@ class DictateApp(rumps.App):
         return callback
 
     def _rebuild_history_menu(self):
-        self._menu_history.clear()
+        if self._menu_history._menu is not None:
+            self._menu_history.clear()
         if not self.history:
             empty = rumps.MenuItem("(empty)")
             self._menu_history.add(empty)
