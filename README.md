@@ -22,7 +22,7 @@ This is free, open source, and runs on Groq's free tier — which is generous en
 ## Install
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/dictate-mac.git
+git clone https://github.com/peterflowset/dictate-mac.git
 cd dictate-mac
 ./install.sh
 ```
