@@ -27,7 +27,7 @@ from scipy.io.wavfile import write as wav_write
 
 # ── Settings ──────────────────────────────────────────────────────────────────
 SAMPLE_RATE = 16000
-HOTKEY_KEYS = {keyboard.Key.alt, keyboard.Key.alt_l, keyboard.Key.alt_r}
+HOTKEY_KEYS = {keyboard.Key.alt_l}
 WHISPER_MODEL = "whisper-large-v3-turbo"
 LLM_MODEL = "llama-3.3-70b-versatile"
 
