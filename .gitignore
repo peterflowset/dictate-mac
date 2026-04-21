@@ -1,0 +1,22 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# macOS
+.DS_Store
+
+# Secrets / user-local state (never commit)
+.env
+.dictate-config.json
+.dictate-vocab.json
+
+# Generated launchers (user-specific paths)
+*.command
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp

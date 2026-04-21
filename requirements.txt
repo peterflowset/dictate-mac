@@ -1,0 +1,9 @@
+numpy
+openai
+pynput
+pyobjc-core
+pyobjc-framework-Cocoa
+pyperclip
+rumps
+scipy
+sounddevice
