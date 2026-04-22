@@ -24,6 +24,8 @@
     <true/>
     <key>NSMicrophoneUsageDescription</key>
     <string>Dictate needs microphone access for voice transcription.</string>
+    <key>NSAppleEventsUsageDescription</key>
+    <string>Dictate uses System Events to paste transcribed text at the cursor.</string>
     <key>LSApplicationCategoryType</key>
     <string>public.app-category.utilities</string>
 </dict>

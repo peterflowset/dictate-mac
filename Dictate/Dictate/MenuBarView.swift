@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 struct MenuBarView: View {
     @EnvironmentObject var manager: DictateManager
@@ -162,10 +163,15 @@ struct MenuBarView: View {
     }
 
     private func showNotification(title: String, body: String) {
-        let notification = NSUserNotification()
-        notification.title = title
-        notification.informativeText = body
-        NSUserNotificationCenter.default.deliver(notification)
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: nil
+        )
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
 }
 

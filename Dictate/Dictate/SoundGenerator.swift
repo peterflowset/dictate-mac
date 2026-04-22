@@ -38,7 +38,7 @@ class SoundGenerator {
 
         for i in 0..<sampleCount {
             let t = Double(i) / sampleRate
-            var sample = sin(2.0 * .pi * frequency * t)
+            let sample = sin(2.0 * .pi * frequency * t)
 
             // Fade in/out envelope
             var envelope: Double = 1.0

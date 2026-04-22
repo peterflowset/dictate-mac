@@ -2,6 +2,7 @@ import Foundation
 import AVFoundation
 import AppKit
 import Combine
+import UserNotifications
 
 enum Language: String, CaseIterable {
     case auto = ""
@@ -58,6 +59,11 @@ class DictateManager: ObservableObject {
         loadApiKey()
         loadConfig()
         loadVocabulary()
+        requestNotificationPermission()
+    }
+
+    private func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
     }
 
     // MARK: - API Key
@@ -140,7 +146,26 @@ class DictateManager: ObservableObject {
 
     // MARK: - Recording
     func startRecording() {
-        guard !isRecording, !isProcessing, hasApiKey else { return }
+        guard !isRecording, !isProcessing else { return }
+
+        guard hasApiKey else {
+            showNotification(title: "Dictate", body: "API Key missing — click menu bar icon to set it")
+            return
+        }
+
+        switch AVCaptureDevice.authorizationStatus(for: .audio) {
+        case .authorized:
+            break
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .audio) { _ in }
+            showNotification(title: "Dictate", body: "Microphone permission requested — try again once granted")
+            return
+        case .denied, .restricted:
+            showNotification(title: "Dictate", body: "Microphone access denied — enable in System Settings")
+            return
+        @unknown default:
+            return
+        }
 
         isRecording = true
         playStartSound()
@@ -378,10 +403,15 @@ class DictateManager: ObservableObject {
     }
 
     private func showNotification(title: String, body: String) {
-        let notification = NSUserNotification()
-        notification.title = title
-        notification.informativeText = body
-        NSUserNotificationCenter.default.deliver(notification)
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: nil
+        )
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
 }
 
@@ -408,6 +438,19 @@ struct Config: Codable {
         case correct
         case language
         case saveToClipboard = "save_to_clipboard"
+    }
+
+    init(correct: Bool, language: String?, saveToClipboard: Bool) {
+        self.correct = correct
+        self.language = language
+        self.saveToClipboard = saveToClipboard
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        correct = try c.decodeIfPresent(Bool.self, forKey: .correct) ?? false
+        language = try c.decodeIfPresent(String.self, forKey: .language) ?? nil
+        saveToClipboard = try c.decodeIfPresent(Bool.self, forKey: .saveToClipboard) ?? false
     }
 }
 
