@@ -11,15 +11,24 @@ struct DictateApp: App {
             MenuBarView()
                 .environmentObject(appDelegate.dictateManager)
         } label: {
-            Image(systemName: appDelegate.dictateManager.statusIcon)
-                .symbolRenderingMode(.hierarchical)
-                .foregroundStyle(appDelegate.dictateManager.isRecording ? .red : .primary)
+            MenuBarIconView(manager: appDelegate.dictateManager)
         }
         .menuBarExtraStyle(.window)
 
         Settings {
             EmptyView()
         }
+    }
+}
+
+struct MenuBarIconView: View {
+    @ObservedObject var manager: DictateManager
+
+    var body: some View {
+        Image(systemName: manager.statusIcon)
+            .symbolRenderingMode(manager.isRecording ? .palette : .hierarchical)
+            .foregroundStyle(manager.isRecording ? .red : .primary)
+            .id("\(manager.statusIcon)-\(manager.isRecording)-\(manager.isProcessing)")
     }
 }
 
