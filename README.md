@@ -55,7 +55,7 @@ cp -R ~/Library/Developer/Xcode/DerivedData/Dictate-*/Build/Products/Release/Dic
 | Icon | State |
 |------|-------|
 | `〰` | Idle — ready to record |
-| `◉` | Recording — speak now |
+| `◉` | Recording — speak now; menu bar icon turns red |
 | `…` | Processing — transcribing |
 
 ### Vocabulary

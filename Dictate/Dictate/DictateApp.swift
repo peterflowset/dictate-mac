@@ -13,6 +13,7 @@ struct DictateApp: App {
         } label: {
             Image(systemName: appDelegate.dictateManager.statusIcon)
                 .symbolRenderingMode(.hierarchical)
+                .foregroundStyle(appDelegate.dictateManager.isRecording ? .red : .primary)
         }
         .menuBarExtraStyle(.window)
 
