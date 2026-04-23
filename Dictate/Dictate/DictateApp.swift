@@ -59,11 +59,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func handleFlagsChanged(_ event: NSEvent) {
-        let leftOptionPressed = event.modifierFlags.contains(.option) && event.keyCode == 58
+        let hotkeyPressed: Bool
+        switch dictateManager.hotkey {
+        case .leftOption:
+            hotkeyPressed = event.modifierFlags.contains(.option) && event.keyCode == 58
+        case .fn:
+            hotkeyPressed = event.modifierFlags.contains(.function)
+        }
 
-        if leftOptionPressed && !dictateManager.isRecording && !dictateManager.isProcessing {
+        if hotkeyPressed && !dictateManager.isRecording && !dictateManager.isProcessing {
             dictateManager.startRecording()
-        } else if !event.modifierFlags.contains(.option) && dictateManager.isRecording {
+        } else if !hotkeyPressed && dictateManager.isRecording {
             dictateManager.stopRecording()
         }
     }

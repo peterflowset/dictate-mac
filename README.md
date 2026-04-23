@@ -48,6 +48,7 @@ cp -R ~/Library/Developer/Xcode/DerivedData/Dictate-*/Build/Products/Release/Dic
   - **Auto-Correct** — LLM post-processing to fix mis-hearings and remove filler words
   - **Save to Clipboard** — keep transcribed text in clipboard instead of restoring previous content
   - **Language** — Auto / German / English
+  - **Hotkey** — choose Left Option or Fn for push-to-talk
 
 ### Menu Bar Icons
 
@@ -70,7 +71,7 @@ Saved at `~/.dictate-vocab.json`.
 
 Settings saved at `~/.dictate-config.json`:
 ```json
-{ "correct": false, "language": null, "save_to_clipboard": false }
+{ "correct": false, "language": null, "save_to_clipboard": false, "hotkey": "left_option" }
 ```
 
 API key saved at `~/.groq-api-key`.

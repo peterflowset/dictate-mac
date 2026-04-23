@@ -124,6 +124,15 @@ private struct MainMenuContent: View {
             .padding(.horizontal, 12)
             .padding(.vertical, 4)
 
+            Picker("Hotkey", selection: $manager.hotkey) {
+                ForEach(DictationHotkey.allCases, id: \.self) { hotkey in
+                    Text(hotkey.label).tag(hotkey)
+                }
+            }
+            .pickerStyle(.menu)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 4)
+
             Divider()
 
             HStack {

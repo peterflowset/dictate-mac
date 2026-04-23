@@ -10,6 +10,29 @@ enum Language: String, CaseIterable {
     case en = "en"
 }
 
+enum DictationHotkey: String, CaseIterable {
+    case leftOption = "left_option"
+    case fn = "fn"
+
+    var label: String {
+        switch self {
+        case .leftOption:
+            return "Left Option"
+        case .fn:
+            return "Fn"
+        }
+    }
+
+    var holdLabel: String {
+        switch self {
+        case .leftOption:
+            return "⌥"
+        case .fn:
+            return "Fn"
+        }
+    }
+}
+
 @MainActor
 class DictateManager: ObservableObject {
     // MARK: - Published State
@@ -26,6 +49,9 @@ class DictateManager: ObservableObject {
     @Published var language: Language = .auto {
         didSet { saveConfig() }
     }
+    @Published var hotkey: DictationHotkey = .leftOption {
+        didSet { saveConfig() }
+    }
 
     // MARK: - Computed Properties
     var statusIcon: String {
@@ -37,7 +63,7 @@ class DictateManager: ObservableObject {
     var statusText: String {
         if isRecording { return "Recording…" }
         if isProcessing { return "Processing…" }
-        return "Hold ⌥ to dictate"
+        return "Hold \(hotkey.holdLabel) to dictate"
     }
 
     var hasApiKey: Bool {
@@ -98,13 +124,15 @@ class DictateManager: ObservableObject {
         autoCorrect = config.correct
         saveToClipboard = config.saveToClipboard
         language = Language(rawValue: config.language ?? "") ?? .auto
+        hotkey = DictationHotkey(rawValue: config.hotkey ?? "") ?? .leftOption
     }
 
     private func saveConfig() {
         let config = Config(
             correct: autoCorrect,
             language: language.rawValue.isEmpty ? nil : language.rawValue,
-            saveToClipboard: saveToClipboard
+            saveToClipboard: saveToClipboard,
+            hotkey: hotkey.rawValue
         )
         if let data = try? JSONEncoder().encode(config) {
             try? data.write(to: configPath)
@@ -433,17 +461,20 @@ struct Config: Codable {
     var correct: Bool
     var language: String?
     var saveToClipboard: Bool
+    var hotkey: String?
 
     enum CodingKeys: String, CodingKey {
         case correct
         case language
         case saveToClipboard = "save_to_clipboard"
+        case hotkey
     }
 
-    init(correct: Bool, language: String?, saveToClipboard: Bool) {
+    init(correct: Bool, language: String?, saveToClipboard: Bool, hotkey: String?) {
         self.correct = correct
         self.language = language
         self.saveToClipboard = saveToClipboard
+        self.hotkey = hotkey
     }
 
     init(from decoder: Decoder) throws {
@@ -451,6 +482,7 @@ struct Config: Codable {
         correct = try c.decodeIfPresent(Bool.self, forKey: .correct) ?? false
         language = try c.decodeIfPresent(String.self, forKey: .language) ?? nil
         saveToClipboard = try c.decodeIfPresent(Bool.self, forKey: .saveToClipboard) ?? false
+        hotkey = try c.decodeIfPresent(String.self, forKey: .hotkey) ?? nil
     }
 }
 
