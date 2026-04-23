@@ -43,8 +43,8 @@ cp -R ~/Library/Developer/Xcode/DerivedData/Dictate-*/Build/Products/Release/Dic
 
 - **Hold left Option (⌥)** → speak → release → text is pasted at the cursor
 - Click the menu bar icon for settings:
-  - **History** — recent transcriptions (click to copy)
-  - **Vocabulary** — custom terms for better recognition
+  - **History** — opens a dedicated view with recent transcriptions; click any entry to copy it
+  - **Vocabulary** — opens a dedicated view for custom recognition terms
   - **Auto-Correct** — LLM post-processing to fix mis-hearings and remove filler words
   - **Save to Clipboard** — keep transcribed text in clipboard instead of restoring previous content
   - **Language** — Auto / German / English
@@ -61,7 +61,7 @@ cp -R ~/Library/Developer/Xcode/DerivedData/Dictate-*/Build/Products/Release/Dic
 
 Add custom terms (names, technical words, company names) for better recognition:
 1. Click menu bar icon → Vocabulary
-2. Click "+ Add term…" or "Edit all…"
+2. Add a term with the input field and plus button, remove terms from the grid, or use "Edit All..."
 3. Terms are used as Whisper context and for Auto-Correct
 
 Saved at `~/.dictate-vocab.json`.
