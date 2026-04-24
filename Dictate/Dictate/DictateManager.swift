@@ -255,7 +255,6 @@ class DictateManager: ObservableObject {
                 }
             }
 
-            // Paste text - genau wie Python-Version
             pasteTextSync(text)
 
         } catch {
@@ -263,7 +262,6 @@ class DictateManager: ObservableObject {
         }
     }
 
-    // Exakt wie die Python paste_text() Funktion
     private nonisolated func pasteTextSync(_ text: String) {
         guard !text.isEmpty else { return }
 

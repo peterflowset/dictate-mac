@@ -1,6 +1,6 @@
 # Dictate Agent Notes
 
-Dictate is a native Swift macOS menu bar app. It is not a Python script.
+Dictate is a native Swift macOS menu bar app.
 
 ## Build And Install
 
