@@ -22,7 +22,9 @@ This is free, open source, and runs on Groq's free tier — which is generous en
 ## Install
 
 ### Option 1: Download Release
-Download `Dictate.app` from the [Releases](https://github.com/peterflowset/dictate-mac/releases) page and move it to `/Applications`.
+1. Download `Dictate-vX.Y.zip` from the [Releases](https://github.com/peterflowset/dictate-mac/releases) page and unzip it.
+2. Move `Dictate.app` to `/Applications`.
+3. **First launch:** right-click `Dictate.app` → **Open** → confirm. The app is not signed with an Apple Developer ID, so Gatekeeper blocks the normal double-click on first launch. Only required once.
 
 ### Option 2: Build from Source
 ```bash
