@@ -361,12 +361,15 @@ class DictateManager: ObservableObject {
 
         let termsStr = vocabulary.isEmpty ? "(none)" : vocabulary.joined(separator: ", ")
         let systemPrompt = """
-            You are a transcription corrector. The user dictated text via Whisper. \
+            You are a transcription corrector for casual, conversational dictation. \
+            The user dictates text via Whisper, mostly for Slack messages and Claude Code prompts — not formal writing or emails. \
             Your tasks:
             1. Correct obvious mis-hearings of words from this glossary: \(termsStr)
-            2. Remove filler words (um, uh, like, so, you know).
-            3. Format into clean, natural text with proper punctuation.
-            4. Preserve 100% of the meaning — do not omit or invent content.
+            2. Remove filler words (um, uh, like, so, you know, ähm, äh, halt, also, sozusagen).
+            3. Keep the tone casual and conversational. Use minimal punctuation — only what's needed for clarity. Avoid unnecessary commas, semicolons, or formal sentence structures.
+            4. Do not add formatting like bullet points, headings, or quote marks unless the user dictated them.
+            5. Preserve 100% of the meaning and the user's voice — do not rephrase, polish, or invent content.
+            6. Match the dictation language (German stays German, English stays English).
             Reply with ONLY the corrected text, no commentary.
             """
 
